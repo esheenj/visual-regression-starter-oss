@@ -11,6 +11,8 @@ npm test
 node bin/check.mjs examples/original.ppm examples/original.ppm
 node bin/check.mjs examples/original.ppm examples/modified.ppm
 node bin/check.mjs examples/original.ppm examples/modified.ppm 12
+node bin/check.mjs examples/original.ppm examples/multiple-changes.ppm
+node bin/check.mjs examples/original.ppm examples/multiple-changes.ppm 13 25
 ```
 
 The examples are invented 2 × 2 pixel grids, not genuine screenshots. CLI exit **0** indicates PASS, **1** requests REVIEW, and **2** indicates BLOCKED/invalid input. The library in `src/p3-diff.mjs` exports `readP3` and `assessPixels`. Passing is based on explicitly supplied numerical tolerance, not automated product acceptance.
@@ -20,3 +22,13 @@ The examples are invented 2 × 2 pixel grids, not genuine screenshots. CLI exit 
 This is **not browser screenshot capture**, image-diff PNG/JPEG support, perceptual or antialiasing analysis, accessibility testing, or WCAG compliance checking. Only bounded ASCII P3, 1–128 pixels in each dimension, 255 maximum channel values and input files up to 300 KB are supported. The comparison never modifies files. Real UI acceptance needs browser/device review.
 
 Please contribute only original code and synthetic fixtures; never upload screenshots of private products or customer data. MIT license. The package intentionally has `private: true` to prevent accidental npm registry publication.
+
+## Understand two different thresholds
+
+The invented 2 × 2 fixture `multiple-changes.ppm` differs from the baseline at pixels **(0,0)** and **(1,1)**, using zero-based coordinates. A strict comparison reports **2/4 changed pixels = 50%** and a bounding rectangle `{x1:0,y1:0,x2:1,y2:1}`.
+
+- **Channel tolerance** is checked *per pixel*, against the largest absolute RGB-channel difference at that pixel. For this fixture, setting tolerance to **13** ignores the 13-level top-left change but still counts the 20-level bottom-right difference (25% changed).
+- **Allowed percentage** is applied *after* channel tolerance. With tolerance **13** and allowed percentage **25**, the report is PASS; with only allowed percentage **25**, it is REVIEW because 50% changed.
+- These settings are illustrative acceptance thresholds, not automatic proof that a changed design is correct. An intentionally high tolerance can suppress meaningful differences.
+
+The expanded tests also prove that invalid/malformed/oversized input files and linked files exit nonzero without echoing their contents. The sample data is fictional; please do not upload customer screenshots or proprietary UI assets.

@@ -1,0 +1,13 @@
+{
+  "name": "@esheen-labs/visual-regression-starter-oss",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node --test",
+    "demo": "node bin/check.mjs examples/original.ppm examples/original.ppm"
+  }
+}

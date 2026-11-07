@@ -17,6 +17,18 @@ node bin/check.mjs examples/original.ppm examples/multiple-changes.ppm 13 25
 
 The examples are invented 2 × 2 pixel grids, not genuine screenshots. CLI exit **0** indicates PASS, **1** requests REVIEW, and **2** indicates BLOCKED/invalid input. The library in `src/p3-diff.mjs` exports `readP3` and `assessPixels`. Passing is based on explicitly supplied numerical tolerance, not automated product acceptance.
 
+## Offline visual HTML report (new MVP slice)
+
+Generate a **standalone, human-readable comparison** of two small, fictional P3 images; the colored cells are illustrative, and the text summary lists changed coordinates and RGB values:
+
+```sh
+node bin/report.mjs examples/original.ppm examples/modified.ppm report.html
+```
+
+Open `report.html` locally. The file contains no scripts, external resources, telemetry or server dependency. This command returns exit **0** for PASS, **1** for REVIEW (report still written) and **2** for invalid or blocked input; it **never overwrites** an existing file or symlink. Choose a new `.html` filename for each run. Optional positional values after the output path are channel tolerance (0–255) and allowed changed-pixel percentage (0–100).
+
+The visual preview deliberately stops at **32 × 32 pixels**, while the original JSON-only `bin/check.mjs` continues to support the documented 128 × 128 limit. The report is a learning tool rather than production screenshot capture, perceptual diffing, or an accessibility audit.
+
 ## Constraints
 
 This is **not browser screenshot capture**, image-diff PNG/JPEG support, perceptual or antialiasing analysis, accessibility testing, or WCAG compliance checking. Only bounded ASCII P3, 1–128 pixels in each dimension, 255 maximum channel values and input files up to 300 KB are supported. The comparison never modifies files. Real UI acceptance needs browser/device review.

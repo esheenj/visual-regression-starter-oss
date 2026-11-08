@@ -1,0 +1,2 @@
+# MIT test-only browser automation; no runtime dependencies.
+playwright==1.62.0

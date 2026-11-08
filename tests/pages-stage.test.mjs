@@ -29,7 +29,7 @@ test("reproducible public static HTML uses exact fictional pixel comparator",asy
   assert.match(demo,/src="\.\/src\/playground\.mjs"/);
   assert.match(readFileSync(join(a,"src/playground.mjs"),"utf8"),/from "\.\/p3-diff\.mjs"/);
   assert.deepEqual(readFileSync(join(a,"playground.html")),readFileSync(join(b,"playground.html")));
-  for(const forbidden of ["AGENTS.md",".git",".github","src","tests","examples","CONTRIBUTING.md"])
+  for(const forbidden of ["AGENTS.md",".git",".github","src/report.mjs","src/private.mjs","tests","examples","CONTRIBUTING.md"])
    assert.equal(existsSync(join(a,forbidden)),false);
   await assert.rejects(stagePages(a),/EEXIST/);
  }finally{rmSync(root,{recursive:true,force:true});}

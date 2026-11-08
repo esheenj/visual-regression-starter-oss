@@ -74,6 +74,43 @@ class FictionalReportBrowserTests(unittest.TestCase):
         self.assertEqual(self.page.locator("img").count(),0)
         self.assertEqual(self.page.locator("h1").count(),1)
 
+    def test_interactive_synthetic_p3_playground_and_validation(self):
+        self.page.get_by_role("link",name="Compare fictional P3 images interactively").click()
+        expect(self.page.get_by_role("heading",name="Compare fictional pixels yourself.")).to_be_visible()
+        expect(self.page.locator("#summary")).to_contain_text("REVIEW")
+        expect(self.page.locator("#summary")).to_contain_text("1 of 4 pixels differ (25%)")
+        self.assertEqual(self.page.locator("#base-grid .pixel").count(),4)
+        self.assertEqual(self.page.locator("#candidate-grid .pixel").count(),4)
+        self.page.locator("#example").select_option("two")
+        expect(self.page.locator("#summary")).to_contain_text("2 of 4 pixels differ (50%)")
+        expect(self.page.locator("#changes li")).to_have_count(2)
+        self.page.locator("#tolerance").fill("13")
+        self.page.locator("#compare").click()
+        expect(self.page.locator("#summary")).to_contain_text("1 of 4 pixels differ (25%)")
+        self.page.locator("#allowed").fill("25")
+        self.page.locator("#compare").click()
+        expect(self.page.locator("#summary")).to_contain_text("PASS")
+        self.page.locator("#candidate").fill("P3\\n1 1\\n255\\n0 0 0\\n")
+        self.page.locator("#compare").click()
+        expect(self.page.locator("#summary")).to_contain_text("BLOCKED")
+        self.page.locator("#candidate").fill("<script>private-placeholder</script>")
+        self.page.locator("#compare").click()
+        expect(self.page.locator("#error")).to_contain_text("Invalid fictional P3")
+        self.assertNotIn("private-placeholder",self.page.locator("#error").inner_text())
+        self.assertEqual(self.page.locator("script").count(),1)
+        for width,height in ((320,700),(375,812),(1440,900)):
+            with self.subTest(width=width):
+                self.page.set_viewport_size({"width":width,"height":height})
+                sizes=self.page.evaluate("""() => ({
+                    page:document.documentElement.scrollWidth,
+                    viewport:innerWidth
+                })""")
+                self.assertLessEqual(sizes["page"],sizes["viewport"])
+        self.page.locator("#reset").click()
+        expect(self.page.locator("#summary")).to_contain_text("REVIEW")
+        expect(self.page.locator("#example")).to_have_value("one")
+        expect(self.page.locator("#example")).to_be_focused()
+
     def test_readable_at_320_px_and_desktop_without_horizontal_page_overflow(self):
         for width,height in ((320,700),(375,812),(768,900),(1440,900)):
             with self.subTest(width=width):

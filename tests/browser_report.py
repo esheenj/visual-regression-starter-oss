@@ -90,7 +90,7 @@ class FictionalReportBrowserTests(unittest.TestCase):
         self.page.locator("#allowed").fill("25")
         self.page.locator("#compare").click()
         expect(self.page.locator("#summary")).to_contain_text("PASS")
-        self.page.locator("#candidate").fill("P3\\n1 1\\n255\\n0 0 0\\n")
+        self.page.locator("#candidate").fill("P3\n1 1\n255\n0 0 0\n")
         self.page.locator("#compare").click()
         expect(self.page.locator("#summary")).to_contain_text("BLOCKED")
         self.page.locator("#candidate").fill("<script>private-placeholder</script>")

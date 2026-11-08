@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'unsafe-inline'; connect-src 'none'; img-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Fictional P3 Pixel Compare · Interactive Playground</title>
+<style>
+:root{font:16px/1.55 system-ui,-apple-system,sans-serif;color-scheme:light dark}
+*{box-sizing:border-box}
+body{margin:0;background:Canvas;color:CanvasText}
+main{max-width:78rem;margin:auto;padding:clamp(1rem,3vw,3rem)}
+h1{font-size:clamp(2rem,5vw,3rem);line-height:1.14}
+h2{font-size:1.35rem}
+p{max-width:75ch}
+a{color:LinkText}
+:focus-visible{outline:3px solid Highlight;outline-offset:3px}
+.note,.panel{border:1px solid GrayText;border-radius:1rem;padding:clamp(1rem,2.5vw,1.6rem);min-width:0}
+.note{border-inline-start:5px solid currentColor;margin:1rem 0 2rem}
+.layout{display:grid;gap:1rem}
+label{display:block;font-weight:700;margin:.7rem 0 .4rem}
+textarea{width:100%;min-height:10rem;resize:vertical;border:1px solid GrayText;border-radius:.5rem;background:Canvas;color:CanvasText;font:.86rem/1.4 ui-monospace,Consolas,monospace;padding:.8rem}
+input[type=number],select,button{font:inherit;min-height:44px;padding:.55rem .7rem;border:1px solid GrayText;border-radius:.5rem;background:Canvas;color:CanvasText;max-width:100%}
+input[type=number]{width:8rem}
+button{cursor:pointer;font-weight:750}
+.controls{display:flex;gap:1rem;flex-wrap:wrap;align-items:end}
+.preview{display:grid;gap:1rem}
+.pixel-frame{max-width:100%;overflow-x:auto;border:1px solid GrayText;border-radius:.5rem;padding:.8rem}
+.pixel-grid{display:grid;gap:2px;width:max-content}
+.pixel{width:1.6rem;height:1.6rem;border:1px solid #888}
+#summary{font-weight:800;font-size:1.15rem}
+#error{min-height:1.5rem}
+#changes{padding-left:1.5rem}
+@media(min-width:52rem){.layout,.preview{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
+<script type="module" src="./src/playground.mjs"></script>
+</head><body><main>
+<p><a href="./index.html">Static sample report</a> · Original Esheen Labs OSS</p>
+<h1>Compare fictional pixels yourself.</h1>
+<p>This is a browser-only learning tool using the same ASCII P3 comparison engine as the command-line MVP. Edit two tiny, fabricated images, choose limits, and inspect the difference. No uploads, accounts, remote assets or persistent storage.</p>
+<p class="note"><strong>Educational only.</strong> Not a screenshot capture service, visual accessibility audit, security control or proof that a design change is correct. A high tolerance can hide meaningful changes.</p>
+<section aria-labelledby="inputs-heading">
+<h2 id="inputs-heading">1. Choose synthetic image samples</h2>
+<label for="example">Sample comparison</label>
+<select id="example">
+<option value="one">One changed pixel</option>
+<option value="identical">Identical pixels</option>
+<option value="two">Two changed corners</option>
+</select>
+<div class="layout">
+<div><label for="baseline">Baseline ASCII P3</label>
+<textarea id="baseline" maxlength="10000" spellcheck="false" aria-describedby="input-hint"></textarea></div>
+<div><label for="candidate">Candidate ASCII P3</label>
+<textarea id="candidate" maxlength="10000" spellcheck="false" aria-describedby="input-hint"></textarea></div>
+</div>
+<p id="input-hint">Use only invented P3 text: 1–32 pixels wide and tall, channel maximum 255, up to 10,000 text characters each. Parsing is local; page reload discards edits.</p>
+<div class="controls">
+<div><label for="tolerance">Per-channel tolerance</label>
+<input id="tolerance" type="number" value="0" min="0" max="255" step="1"></div>
+<div><label for="allowed">Allowed changed pixels (%)</label>
+<input id="allowed" type="number" value="0" min="0" max="100" step="1"></div>
+<button id="compare" type="button">Compare locally</button>
+<button id="reset" type="button">Reset examples</button>
+</div>
+</section>
+<section class="panel" aria-labelledby="result-heading">
+<h2 id="result-heading">2. Inspect the result</h2>
+<p id="summary" role="status" aria-live="polite">No comparison yet.</p>
+<p id="error" role="alert"></p>
+<div class="preview">
+<section><h3>Baseline</h3><div class="pixel-frame"><div class="pixel-grid" id="base-grid" aria-hidden="true"></div></div></section>
+<section><h3>Candidate</h3><div class="pixel-frame"><div class="pixel-grid" id="candidate-grid" aria-hidden="true"></div></div></section>
+</div>
+<h3>Changed pixel coordinates</h3>
+<ol id="changes" aria-label="Changed pixel details"></ol>
+<p>Both color grids are decorative; the count and changed coordinates above are provided as readable text.</p>
+</section>
+<p>Contribute small, reproducible regressions: <a href="https://github.com/esheenj/visual-regression-starter-oss">browse original source and tests</a>. This playground does not save input or send it anywhere.</p>
+</main></body></html>

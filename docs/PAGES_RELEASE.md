@@ -1,6 +1,8 @@
 # Visual Regression Starter — public static report
 
-The original public pixel comparator can generate a single **fictional, script-free** HTML report directly from its two checked-in P3 samples. The result is useful for showing the open-source MVP without installing Node in the viewer's browser.
+The Pages bundle now contains **two original public demonstrations**: the generated script-free comparison at `index.html` and an interactive local P3 editor at `playground.html`. The browser adapter imports only the original pixel validator and fictional fixture module; it neither uploads text nor calls a backend.
+
+The original public pixel comparator can generateThe original public pixel comparator can generate a single **fictional, script-free** HTML report directly from its two checked-in P3 samples. The result is useful for showing the open-source MVP without installing Node in the viewer's browser.
 
 ## Test exact public artifact locally
 

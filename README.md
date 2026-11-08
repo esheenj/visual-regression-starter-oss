@@ -35,6 +35,16 @@ To stage the **exact deterministic Pages artifact**, run `node scripts/stage_pag
 
 [GitHub Pages setup and actual HTTPS acceptance](docs/PAGES_RELEASE.md) are required before advertising a live URL; public source and green CI do not establish that Pages is operational. The sample is explicitly a `REVIEW` verdict, not an error or formal visual acceptance. For a first original contribution, follow [CONTRIBUTING.md](CONTRIBUTING.md).
 
+## Interactive, browser-only P3 comparison
+
+The [interactive playground](playground.html) lets developers paste **fictional ASCII P3** grids, choose between one/two changed-pixel examples, set per-channel tolerance and allowed change percentage, and compare using the same `assessPixels` function as the CLI. Colored cells have a textual coordinate/percentage summary. All input is local to the open page; no uploads, telemetry, accounts or external scripts.
+
+```sh
+python3 -m http.server 8000 --bind 127.0.0.1
+```
+
+Open `http://127.0.0.1:8000/playground.html` locally. The public Pages artifact contains both the original **script-free static report** (`index.html`) and the new interactive playground (`playground.html`). Stage exact files with `node scripts/stage_pages.mjs dist/pages`; GitHub CI checks the staged pages with real Chrome. **No hosted Pages address is verified live** until GitHub settings and independent HTTPS acceptance succeed.
+
 ## Constraints
 
 This is **not browser screenshot capture**, image-diff PNG/JPEG support, perceptual or antialiasing analysis, accessibility testing, or WCAG compliance checking. Only bounded ASCII P3, 1–128 pixels in each dimension, 255 maximum channel values and input files up to 300 KB are supported. The comparison never modifies files. Real UI acceptance needs browser/device review.

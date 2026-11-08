@@ -15,7 +15,7 @@ test("reproducible public static HTML uses exact fictional pixel comparator",asy
   assert.equal(x.verifiedHosting,false);
   assert.equal(x.pixelVerdict,"REVIEW");
   assert.equal(x.differentPixels,1);
-  assert.deepEqual(x.files,[".nojekyll","index.html"]);
+  assert.deepEqual(x.files,[".nojekyll","index.html","playground.html","src/demo-data.mjs","src/p3-diff.mjs","src/playground.mjs"]);
   const html=readFileSync(join(a,"index.html"));
   assert.deepEqual(html,readFileSync(join(b,"index.html")));
   assert.equal(x.htmlSha256,createHash("sha256").update(html).digest("hex"));
@@ -24,6 +24,11 @@ test("reproducible public static HTML uses exact fictional pixel comparator",asy
   assert.match(html.toString(),/1 of 4 pixels differ \(25%\)/);
   assert.match(html.toString(),/Column 2, row 2/);
   assert.doesNotMatch(html.toString(),/<script|<img|https?:\/\//i);
+  assert.match(html.toString(),/href="\.\/playground\.html"/);
+  const demo=readFileSync(join(a,"playground.html"),"utf8");
+  assert.match(demo,/src="\.\/src\/playground\.mjs"/);
+  assert.match(readFileSync(join(a,"src/playground.mjs"),"utf8"),/from "\.\/p3-diff\.mjs"/);
+  assert.deepEqual(readFileSync(join(a,"playground.html")),readFileSync(join(b,"playground.html")));
   for(const forbidden of ["AGENTS.md",".git",".github","src","tests","examples","CONTRIBUTING.md"])
    assert.equal(existsSync(join(a,forbidden)),false);
   await assert.rejects(stagePages(a),/EEXIST/);

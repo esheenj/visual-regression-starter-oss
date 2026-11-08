@@ -29,6 +29,12 @@ Open `report.html` locally. The file contains no scripts, external resources, te
 
 The visual preview deliberately stops at **32 × 32 pixels**, while the original JSON-only `bin/check.mjs` continues to support the documented 128 × 128 limit. The report is a learning tool rather than production screenshot capture, perceptual diffing, or an accessibility audit.
 
+## Public static report and contributions
+
+To stage the **exact deterministic Pages artifact**, run `node scripts/stage_pages.mjs dist/pages`. It produces a standalone script-free fictional pixel comparison and excludes unrelated files. CI now tests the generated public artifact in real Chrome across narrow and desktop viewports.
+
+[GitHub Pages setup and actual HTTPS acceptance](docs/PAGES_RELEASE.md) are required before advertising a live URL; public source and green CI do not establish that Pages is operational. The sample is explicitly a `REVIEW` verdict, not an error or formal visual acceptance. For a first original contribution, follow [CONTRIBUTING.md](CONTRIBUTING.md).
+
 ## Constraints
 
 This is **not browser screenshot capture**, image-diff PNG/JPEG support, perceptual or antialiasing analysis, accessibility testing, or WCAG compliance checking. Only bounded ASCII P3, 1–128 pixels in each dimension, 255 maximum channel values and input files up to 300 KB are supported. The comparison never modifies files. Real UI acceptance needs browser/device review.

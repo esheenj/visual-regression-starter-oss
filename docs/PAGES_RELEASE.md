@@ -13,7 +13,7 @@ python3 -m pip install -r tests/browser-requirements.txt
 VISUAL_DEMO_ROOT=dist/pages python3 tests/browser_report.py
 ```
 
-Chrome or Chromium is required for the pinned test-only Playwright tests; no browser package is needed to **view** the static report. The staging script generates just `index.html` and `.nojekyll`, excludes original raw fixtures, private history, repo metadata and test code, and rejects an existing destination. The demo reports exactly one changed fictional pixel and a `REVIEW` verdict, not product acceptance.
+Chrome or Chromium is required for the pinned test-only Playwright tests; no browser package is needed to **view** the static report. The staging script generates `index.html` (static report), `playground.html`, the three public browser modules under `src/`, and `.nojekyll`; it excludes original raw fixtures, private history, repo metadata and tests, and rejects an existing destination. The demo reports exactly one changed fictional pixel and a `REVIEW` verdict, not product acceptance.
 
 ## One-time GitHub Pages setup
 

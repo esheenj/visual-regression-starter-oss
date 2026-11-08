@@ -18,3 +18,28 @@ jobs:
           node-version: '22'
       - run: npm test
       - run: npm run demo
+      - name: Stage exact fictional HTML report for Pages
+        run: node scripts/stage_pages.mjs dist/pages
+
+
+  browser-report:
+    name: Real Chrome staged pixel report QA
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22'
+      - name: Build exact fictional source-only site
+        run: node scripts/stage_pages.mjs dist/pages
+      - name: Install pinned test-only Chrome automation
+        run: python3 -m pip install -r tests/browser-requirements.txt
+      - name: Check generated script-free report in installed Chrome
+        env:
+          VISUAL_DEMO_ROOT: dist/pages
+        run: python3 tests/browser_report.py

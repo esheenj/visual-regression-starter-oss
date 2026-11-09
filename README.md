@@ -1,5 +1,7 @@
 # Visual Regression Starter
 
+**[Open the GitHub-deployed static P3 report and interactive comparison](https://esheenj.github.io/visual-regression-starter-oss/)** — [GitHub Pages deployment](https://github.com/esheenj/visual-regression-starter-oss/actions/runs/42485712445) succeeded on **9 November 2026**. Independent external HTTPS/browser verification is still pending; please report any rendering problems in GitHub Issues.
+
 A small **offline pixel-comparison learning project**. It reads two plain-text P3 Portable Pixmap samples and produces a deterministic difference report with a bounding rectangle, without external packages or accounts.
 
 ## Try it
@@ -43,7 +45,7 @@ The [interactive playground](playground.html) lets developers paste **fictional 
 python3 -m http.server 8000 --bind 127.0.0.1
 ```
 
-Open `http://127.0.0.1:8000/playground.html` locally. The public Pages artifact contains both the original **script-free static report** (`index.html`) and the new interactive playground (`playground.html`). Stage exact files with `node scripts/stage_pages.mjs dist/pages`; GitHub CI checks the staged pages with real Chrome. **No hosted Pages address is verified live** until GitHub settings and independent HTTPS acceptance succeed.
+Open `http://127.0.0.1:8000/playground.html` locally. The public Pages artifact contains both the original **script-free static report** (`index.html`) and the new interactive playground (`playground.html`). Stage exact files with `node scripts/stage_pages.mjs dist/pages`; GitHub CI checks the staged pages with real Chrome. **GitHub deployment completed successfully**, but external HTTPS/browser acceptance is pending.
 
 ## Constraints
 

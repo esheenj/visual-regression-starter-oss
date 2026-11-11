@@ -23,6 +23,32 @@ test('deterministic standalone report reveals actual pixel changes without raw i
   assert.equal((a.html.match(/class="pixel changed"/g) || []).length, 2);
 });
 
+const fictionalGrid = changed => `P3\n10 12\n255\n${'1 0 0\n'.repeat(changed)}${'0 0 0\n'.repeat(120 - changed)}`;
+
+test('changed coordinates beyond 100 are disclosed without clipping report totals', () => {
+  const { result, html } = renderPixelReport(fictionalGrid(0), fictionalGrid(108));
+  const listed = html.match(/<li>[^<]*<\/li>/g) ?? [];
+  const expected = Array.from({ length: 100 }, (_, index) =>
+    `<li>Column ${index % 10 + 1}, row ${Math.floor(index / 10) + 1}: 0, 0, 0 → 1, 0, 0</li>`
+  );
+  assert.deepEqual(listed, expected);
+  assert.match(html, /<p>8 additional changed pixels omitted from the list\.<\/p>/);
+  assert.match(html, /108 of 120 pixels differ \(90%\)/);
+  assert.equal(result.differentPixels, 108);
+  assert.equal(result.totalPixels, 120);
+  assert.equal(result.percentage, 90);
+});
+
+test('exactly 100 changed coordinates are all listed without an omission notice', () => {
+  const { result, html } = renderPixelReport(fictionalGrid(0), fictionalGrid(100));
+  assert.equal((html.match(/<li>/g) ?? []).length, 100);
+  assert.doesNotMatch(html, /additional changed pixels omitted/);
+  assert.match(html, /100 of 120 pixels differ \(83\.333%\)/);
+  assert.equal(result.differentPixels, 100);
+  assert.equal(result.totalPixels, 120);
+  assert.equal(result.percentage, 83.333);
+});
+
 test('tolerance, mismatch and preview bounds are fail-closed', () => {
   assert.equal(renderPixelReport(base, current, {tolerance:12}).result.verdict,'PASS');
   assert.match(renderPixelReport(base, base).html, /No pixels changed/);

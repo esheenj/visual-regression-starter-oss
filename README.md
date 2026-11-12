@@ -1,6 +1,10 @@
 # Visual Regression Starter
 
-**[Open the GitHub-deployed static P3 report and interactive comparison](https://esheenj.github.io/visual-regression-starter-oss/)** — [GitHub Pages deployment](https://github.com/esheenj/visual-regression-starter-oss/actions/runs/42485712445) succeeded on **9 November 2026**. Independent external HTTPS/browser verification is still pending; please report any rendering problems in GitHub Issues.
+**Explore the Esheen Labs gallery:** [Try 28 open-source browser demos and developer playgrounds](https://esheenj.github.io/compound-intelligence-starter/) across seven independent public repositories, including AI agent experiments, UX patterns and tooling. They use fictional examples; 28 demos does **not** mean 28 separate repositories.
+
+**Who this is for:** Inspect visual differences and explore pixel-tolerance trade-offs in a browser.
+
+**[Open the GitHub-deployed static P3 report and interactive comparison](https://esheenj.github.io/visual-regression-starter-oss/)** — [GitHub Pages deployment](https://github.com/esheenj/visual-regression-starter-oss/actions/runs/42485712445) succeeded on **9 November 2026**. The seven-project collection separately passed a bounded independent public HTTPS Chrome check on 11 November 2026 ([acceptance evidence](https://github.com/esheenj/compound-intelligence-starter/actions/runs/43064815195)); physical-device and assistive-technology acceptance are not claimed.
 
 A small **offline pixel-comparison learning project**. It reads two plain-text P3 Portable Pixmap samples and produces a deterministic difference report with a bounding rectangle, without external packages or accounts.
 

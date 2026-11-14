@@ -1,5 +1,9 @@
 # Visual Regression Starter
 
+**Product definition:** A minimal, offline visual-difference learning kit for UI engineers and QA developers. Reproduce numeric pixel comparisons, tolerance decisions and human-readable diff reports from tiny *synthetic P3 Portable Pixmap samples*.
+
+**What it is not:** a production screenshot regression platform, browser capture service, accessibility assessment or approval of a real UI. The open-source demonstration can help explain the mechanics of regression review before teams select or implement a larger testing system.
+
 **Support this open-source project (optional):** [Esheen Labs crypto support](https://esheenj.github.io/compound-intelligence-starter/support.html) accepts maintainer-supplied BTC on Bitcoin and USDT on Solana, Ethereum/ERC-20 or Tron/TRC-20. The destination addresses are **custodial Pionex exchange deposits** and may change; check the exact network, current address and minimum before sending. Contributions do not buy priority, access or execution authority. All demos and source remain free.
 
 **Explore more open-source tools:** [Browse the live Esheen Labs AI and developer playgrounds](https://esheenj.github.io/compound-intelligence-starter/) for agent trust, prompt evaluation, dataset quality, UX patterns, design systems and engineering utilities. Each featured project links to its public source and interactive demo. Additional browser tools may live within an existing repository; demo-page totals should not be mistaken for separate GitHub repositories. All examples use fictional data and have documented limitations.
